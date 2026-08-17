@@ -1,6 +1,6 @@
 # Enterprise-Dual-ISP-Failover-EVE-NG
 
-Enterprise Dual-ISP WAN Failover Lab using EVE-NG, Cisco IOS, HSRP, IP SLA, Object Tracking , EtherChannel , PAT, Route Maps and EEM.
+HSRP | IP SLA | Object Tracking | ISP Failover | PAT/NAT | Route Maps | EEM | VLAN | Router-on-a-Stick | EtherChannel | LACP | 802.1Q | EVE-NG | Cisco IOS
 
 The network is designed to use only one ISP at a time. IP SLA and object tracking continuously monitor the primary ISP. If ISP-1 fails, traffic is automatically rerouted to ISP-2, ensuring uninterrupted Internet connectivity.
 
