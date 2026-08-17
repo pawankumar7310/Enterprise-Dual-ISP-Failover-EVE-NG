@@ -1,0 +1,50 @@
+!R-1  EEM clears NAT translations
+
+! ISP-1 DOWN
+event manager applet ISP1-DOWN-CHECK
+event track 1 state down
+action 1.0 track read 2
+action 2.0 if $_track_state eq "up"
+action 3.0 syslog msg "*** ALERT: ISP-1 DOWN - TRAFFIC MOVED TO ISP-2 ***"
+action 4.0 cli command "clear ip nat translation *"
+action 5.0 else
+action 6.0 syslog msg "*** CRITICAL: ISP-1 AND ISP-2 ARE DOWN - NO ISP AVAILABLE ***"
+action 7.0 end
+
+! ISP-1 UP
+event manager applet ISP1-UP-CHECK
+event track 1 state up
+action 1.0 track read 2
+action 2.0 if $_track_state eq "up"
+action 3.0 syslog msg "*** ALERT: ISP-1 UP - PRIMARY ISP-1 AVAILABLE ***"
+action 4.0 cli command "clear ip nat translation *"
+action 5.0 else
+action 6.0 syslog msg "*** ALERT: ISP-1 UP - TRAFFIC MOVED FROM NO ISP TO ISP-1 ***"
+action 7.0 cli command "clear ip nat translation *"
+action 8.0 end
+
+! ISP-2 DOWN
+event manager applet ISP2-DOWN-CHECK
+event track 2 state down
+action 1.0 track read 1
+action 2.0 if $_track_state eq "up"
+action 3.0 syslog msg "*** ALERT: ISP-2 DOWN - TRAFFIC REMAINS ON ISP-1 ***"
+action 4.0 cli command "clear ip nat translation *"
+action 5.0 else
+action 6.0 syslog msg "*** CRITICAL: ISP-1 AND ISP-2 ARE DOWN - NO ISP AVAILABLE ***"
+action 7.0 end
+!
+! ISP-2 UP
+event manager applet ISP2-UP-CHECK
+event track 2 state up
+action 1.0 track read 1
+action 2.0 if $_track_state eq "up"
+action 3.0 syslog msg "*** ALERT: ISP-2 UP - TRAFFIC REMAINS ON ISP-1 ***"
+action 4.0 cli command "clear ip nat translation *"
+action 5.0 else
+action 6.0 syslog msg "*** ALERT: ISP-2 UP - TRAFFIC MOVED TO ISP-2 ***"
+action 7.0 cli command "clear ip nat translation *"
+action 8.0 end
+end
+wr
+
