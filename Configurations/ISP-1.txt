@@ -1,1 +1,21 @@
+!ISP-1 configuration
+enable
+configure terminal
 
+hostname ISP-1
+
+interface GigabitEthernet0/0
+description TO-R1
+ip address 1.1.1.2 255.255.255.252
+no shutdown
+
+interface GigabitEthernet0/1
+description TO-R2
+ip address 4.4.4.2 255.255.255.252
+no shutdown
+
+interface Loopback1
+ip address 8.8.8.8 255.255.255.255
+
+end
+write memory
